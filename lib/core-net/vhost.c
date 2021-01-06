@@ -733,6 +733,13 @@ lws_create_vhost(struct lws_context *context,
 	vh->http.mount_list = info->mounts;
 #endif
 
+#if defined(LWS_WITH_SYS_METRICS) && defined(LWS_WITH_SERVER)
+	lws_snprintf(buf, sizeof(buf), "vh.%s.rx", vh->name);
+	vh->mt_traffic_rx = lws_metric_create(context, 0, buf);
+	lws_snprintf(buf, sizeof(buf), "vh.%s.tx", vh->name);
+	vh->mt_traffic_tx = lws_metric_create(context, 0, buf);
+#endif
+
 #ifdef LWS_WITH_UNIX_SOCK
 	if (LWS_UNIX_SOCK_ENABLED(vh)) {
 		lwsl_info("Creating Vhost '%s' path \"%s\", %d protocols\n",
@@ -838,7 +845,7 @@ lws_create_vhost(struct lws_context *context,
 		goto bail1;
 	}
 #if defined(LWS_WITH_SERVER)
-	lws_context_lock(context, "create_vhost");
+	lws_context_lock(context, __func__);
 	n = _lws_vhost_init_server(info, vh);
 	lws_context_unlock(context);
 	if (n < 0) {
@@ -1054,6 +1061,11 @@ lws_vhost_destroy1(struct lws_vhost *vh)
 			}
 		} lws_end_foreach_ll(v, vhost_next);
 
+#endif
+
+#if defined(LWS_WITH_SERVER)
+	lws_metric_destroy(vh->mt_traffic_rx, 0);
+	lws_metric_destroy(vh->mt_traffic_tx, 0);
 #endif
 
 	lws_vhost_unlock(vh); /* } vh -------------- */

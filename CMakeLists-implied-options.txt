@@ -83,7 +83,7 @@ if(LWS_WITH_DISTRO_RECOMMENDED)
 	set(LWS_WITH_SOCKS5 1)				# selfcontained
 	set(LWS_WITH_RANGES 1)				# selfcontained
 	set(LWS_WITH_ACME 1)				# selfcontained / tls
-	set(LWS_WITH_SERVER_STATUS 1)			# selfcontained
+	set(LWS_WITH_SYS_METRICS 1)			# selfcontained
 	set(LWS_WITH_GLIB 1)				# glib
 	set(LWS_WITH_LIBUV 1)				# libuv
 	set(LWS_WITH_LIBEV 1)				# libev
@@ -210,7 +210,7 @@ if (LWS_WITH_LWSWS)
  set(LWS_WITH_LIBUV_INTERNAL 1)
  set(LWS_WITH_EVENT_LIBS 1) # implied by LIBUV_INTERNAL
  set(LWS_WITH_ACCESS_LOG 1)
- set(LWS_WITH_SERVER_STATUS 1)
+ set(LWS_WITH_SYS_METRICS 1)
  set(LWS_WITH_LEJP 1)
  set(LWS_WITH_LEJP_CONF 1)
  set(LWS_WITH_PEER_LIMITS 1)
